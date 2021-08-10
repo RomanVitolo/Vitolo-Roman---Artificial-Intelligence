@@ -27,7 +27,5 @@ public class EnemyController : MonoBehaviour
             Debug.Log("No veo al enemigo");
             inSight = false; 
         }
-        
-        
     }
 }
