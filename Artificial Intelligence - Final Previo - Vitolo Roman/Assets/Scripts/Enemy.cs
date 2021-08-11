@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMove
+public class Enemy : MonoBehaviour
 {
-    void Move();
-    void Escape();
+   
 }
