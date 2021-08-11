@@ -11,11 +11,11 @@ public class IdleState<T> : FSMState<T>
         _idle = idle;
     }
 
-    // public override void Awake()
-    // {
-    //     Debug.Log("Arranco en Idle");
-    //     _idle.DoIdle();
-    // }
+     public override void Awake()
+    {
+        Debug.Log("Arranco en Idle");
+         _idle.DoIdle();
+    }
     
     public override void Execute()
     {

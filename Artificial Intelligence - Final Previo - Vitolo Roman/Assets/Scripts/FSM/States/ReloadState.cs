@@ -14,6 +14,6 @@ public class ReloadState<T> : FSMState<T>
     public override void Execute()
     {
         Debug.Log("Estoy recargando");
-        _reloadAmmo.Attack();
+        _reloadAmmo.Reload();
     }
 }

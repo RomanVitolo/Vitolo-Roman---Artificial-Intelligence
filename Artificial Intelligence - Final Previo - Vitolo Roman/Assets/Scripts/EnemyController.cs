@@ -6,11 +6,12 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
 {
     [SerializeField] private Transform target;
-    public bool inSight;
+   // public bool inSight = false;
     private LineOfSight _lineOfSight;
     private Rigidbody rb;
     private FSM<string> _fsm;
     float _currentWalkedTime = 4f;
+    
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -89,16 +90,16 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
 
     public void Pursuit()
     {
-        if(!_lineOfSight.IsInSight(target) && inSight == true)
+        if(!_lineOfSight.IsInSight(target))
         {
             Debug.Log("No veo al enemigo");
-            inSight = false; 
-            _fsm.DoTransition("attack");
+            _fsm.DoTransition("shoot");
         }
     }
-    public void Attack()
+    public void Shoot()
     {
-        
+        Debug.Log("entre en el Shoot");
+        _fsm.DoTransition("reload");
     }
     public void Reload()
     {
@@ -106,14 +107,17 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
     }
     public void Move()
     {
-        if (_lineOfSight.IsInSight(target) && inSight == false)
+        if(_lineOfSight.IsInSight(target))
         {
-            Debug.Log("Veo al Enemigo");
-            inSight = true;
-            _fsm.DoTransition("pursuit");
+         Debug.Log("Veo al Enemigo");
+         _fsm.DoTransition("pursuit");
+        }
+        else
+        {
+            _fsm.DoTransition("escape");
         }
     }
-
+    
     public void Escape()
     {
         

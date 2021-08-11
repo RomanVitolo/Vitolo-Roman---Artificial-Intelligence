@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IAttack
 {
     void Pursuit();
-    void Attack();
+    void Shoot();
     void Reload();
 }

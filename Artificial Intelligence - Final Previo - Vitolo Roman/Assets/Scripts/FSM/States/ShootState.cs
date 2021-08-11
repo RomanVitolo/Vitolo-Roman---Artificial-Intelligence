@@ -14,6 +14,6 @@ public class ShootState<T> : FSMState<T>
     public override void Execute()
     {
         Debug.Log("Estoy disparando");
-        _shoot.Attack();
+        _shoot.Shoot();
     }
 }
