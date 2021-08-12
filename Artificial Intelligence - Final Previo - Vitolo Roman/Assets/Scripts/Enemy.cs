@@ -20,9 +20,11 @@ public class Enemy : MonoBehaviour, IMove
     }
     public void GoMove(Vector3 dir)
     {
-        dir.y = 0;
         _rb.velocity = dir * speed;
-        transform.forward = Vector3.Lerp(transform.forward, dir, 0.2f);
+        dir.y = 0;
+        //transform.forward = Vector3.Lerp(transform.forward, dir, 0.2f);
+        transform.forward = Vector3.Lerp(transform.forward, b: dir, t: 0.2f * Time.deltaTime);
+        Debug.Log("activo el Go Move" + transform.forward.x);
     }
     
     public void Escape()
