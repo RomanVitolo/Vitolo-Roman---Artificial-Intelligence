@@ -22,5 +22,10 @@ public class IdleState<T> : FSMState<T>
         Debug.Log("Idle State");
         _idle.DoIdle();
     }
+
+    public override void Sleep()
+    {
+        Debug.Log("me fui del Iddle");
+    }
 }
 

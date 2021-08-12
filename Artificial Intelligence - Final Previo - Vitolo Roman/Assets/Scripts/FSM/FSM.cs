@@ -15,6 +15,7 @@ public class FSM<T>
     public void OnUpdate()
     {
         _currentState.Execute();
+        Debug.Log("el estado actual es: " + _currentState);
     }
 
     public void DoTransition(T input)

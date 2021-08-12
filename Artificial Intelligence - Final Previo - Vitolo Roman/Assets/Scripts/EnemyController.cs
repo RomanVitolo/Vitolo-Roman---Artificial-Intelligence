@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
+public class EnemyController : MonoBehaviour, IIdle, IAttack
 {
     [SerializeField] private Transform target;
-   // public bool inSight = false;
+    public bool inSight = true;
     private LineOfSight _lineOfSight;
     private Rigidbody rb;
     private FSM<string> _fsm;
     float _currentWalkedTime = 4f;
+    private Enemy _enemy;
+    //private IMove _move;
     
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,16 +23,25 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
 
     private void Start()
     {
+        _enemy = GetComponent<Enemy>();
         InitializeStateMachine();
     }
 
     void Update()
-    {
-        //_fsm.OnUpdate();
-        if (Time.timeScale == 1)
+    { 
+        if (_lineOfSight.IsInSight(target))
         {
-            _fsm.OnUpdate();
+            Debug.Log("veo al enemigo");
+            _fsm.DoTransition("escape");
+            //_fsm.DoTransition("pursuit");
         }
+        if(!_lineOfSight.IsInSight(target))
+        {
+            Debug.Log("No veo al enemigo");
+            //_fsm.DoTransition("escape");
+            _fsm.DoTransition("pursuit");
+        }
+        _fsm.OnUpdate();
     }
 
     void InitializeStateMachine()
@@ -38,10 +50,10 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
         
         IdleState<string> idle = new IdleState<string>(this);
         PursuitState<string> pursuit = new PursuitState<string>(this);
-        WalkState<string> walk = new WalkState<string>(this);
+        WalkState<string> walk = new WalkState<string>(_enemy);
         ShootState<string> shoot = new ShootState<string>(this);
         ReloadState<string> reload = new ReloadState<string>(this);
-        EscapeState<string> escape = new EscapeState<string>(this);
+        EscapeState<string> escape = new EscapeState<string>(_enemy);
 
         idle.AddTransition("walk", walk);
         idle.AddTransition("pursuit", pursuit);
@@ -85,16 +97,17 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
     
     public void DoIdle()
     {
-        StartCoroutine(WaitToRecover());
+        _fsm.DoTransition("walk");
     }
 
-    public void Pursuit()
+   public void Pursuit()
     {
-        if(!_lineOfSight.IsInSight(target))
+        /*if(!_lineOfSight.IsInSight(target))
         {
+            inSight = false;
             Debug.Log("No veo al enemigo");
             _fsm.DoTransition("shoot");
-        }
+        }*/
     }
     public void Shoot()
     {
@@ -105,32 +118,10 @@ public class EnemyController : MonoBehaviour, IMove, IIdle, IAttack
     {
         
     }
-    public void Move()
-    {
-        if(_lineOfSight.IsInSight(target))
-        {
-         Debug.Log("Veo al Enemigo");
-         _fsm.DoTransition("pursuit");
-        }
-        else
-        {
-            _fsm.DoTransition("escape");
-        }
-    }
-    
-    public void Escape()
-    {
-        
-    }
-    
+
     IEnumerator WaitToRecover()
     {
         yield return new WaitForSeconds(1);
-        _currentWalkedTime = 0;
-        if (_currentWalkedTime == 0)
-        {
-            _fsm.DoTransition("walk");
-            Debug.Log("Entre al IF");
-        }
+        
     }
 }

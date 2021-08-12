@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class WalkState<T> : FSMState<T>
 {
-    private IMove _move;
+    private IMove _walk;
 
-    public WalkState(IMove move)
+    public WalkState(IMove walk)
     {
-        _move = move;
+        _walk = walk;
     }
     public override void Execute()
     {
         Debug.Log("Me estoy moviendo");
-        _move.Move();
+        _walk.Move();
     }
 }

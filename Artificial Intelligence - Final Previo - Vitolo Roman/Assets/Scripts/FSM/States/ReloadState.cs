@@ -5,6 +5,7 @@ using UnityEngine;
 public class ReloadState<T> : FSMState<T>
 {
     private IAttack _reloadAmmo;
+    private Enemy _enemy;
 
     public ReloadState(IAttack reloadAmmo)
     {

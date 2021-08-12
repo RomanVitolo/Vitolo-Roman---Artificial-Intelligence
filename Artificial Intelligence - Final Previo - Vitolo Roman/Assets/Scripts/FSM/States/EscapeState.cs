@@ -5,7 +5,7 @@ using UnityEngine;
 public class EscapeState<T> : FSMState<T>
 {
     private IMove _escape;
-    
+
     public EscapeState(IMove escape)
     {
         _escape = escape;

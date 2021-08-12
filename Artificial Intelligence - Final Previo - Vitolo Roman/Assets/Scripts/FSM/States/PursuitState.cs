@@ -5,10 +5,12 @@ using UnityEngine;
 public class PursuitState<T> : FSMState<T>
 {
     private IAttack _followTarget;
+    
 
     public PursuitState(IAttack followTarget)
     {
         _followTarget = followTarget;
+        
     }
 
     public override void Execute()
