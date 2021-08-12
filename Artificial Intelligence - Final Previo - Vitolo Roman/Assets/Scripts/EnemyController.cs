@@ -9,9 +9,14 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
     public bool inSight = true;
     private LineOfSight _lineOfSight;
     private Rigidbody rb;
+    [SerializeField] private Rigidbody rbTarget;
     private FSM<string> _fsm;
-    float _currentWalkedTime = 4f;
     private Enemy _enemy;
+    private float timePrediction = 2f;
+    private float speed = 2f;
+    private ISteeringBehaviors _steeringBehaviors;
+
+    private Enemy2 _enemy2;
     //private IMove _move;
     
 
@@ -24,6 +29,8 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
     private void Start()
     {
         _enemy = GetComponent<Enemy>();
+        _steeringBehaviors = new Pursuit(transform, target, rbTarget, timePrediction);
+        _enemy2 = GetComponent<Enemy2>();
         InitializeStateMachine();
     }
 
@@ -93,22 +100,17 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
         
         _fsm.SetInitialState(idle);
     }
-    
-    
+
     public void DoIdle()
     {
         _fsm.DoTransition("walk");
     }
 
    public void Pursuit()
-    {
-        /*if(!_lineOfSight.IsInSight(target))
-        {
-            inSight = false;
-            Debug.Log("No veo al enemigo");
-            _fsm.DoTransition("shoot");
-        }*/
-    }
+   {
+       var dir = _steeringBehaviors.GetDir();
+       _enemy.GoMove(dir.normalized);
+   }
     public void Shoot()
     {
         Debug.Log("entre en el Shoot");
