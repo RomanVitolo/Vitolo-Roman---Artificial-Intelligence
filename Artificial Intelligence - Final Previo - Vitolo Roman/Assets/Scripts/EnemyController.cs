@@ -14,6 +14,9 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
     private Enemy _enemy;
     private float timePrediction = 2f;
     private float speed = 2f;
+    [SerializeField] private float radius = 1f;
+    [SerializeField] private float avoidWeight = 0.5f;
+    [SerializeField] private LayerMask mask;
     private ISteeringBehaviors _steeringBehaviors;
 
     private Enemy2 _enemy2;
@@ -30,6 +33,7 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
     {
         _enemy = GetComponent<Enemy>();
         _steeringBehaviors = new Pursuit(transform, target, rbTarget, timePrediction);
+        _steeringBehaviors = new ObstacleAvoidance(transform, target, radius, mask, avoidWeight);
         _enemy2 = GetComponent<Enemy2>();
         InitializeStateMachine();
     }
@@ -39,14 +43,12 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
         if (_lineOfSight.IsInSight(target))
         {
             Debug.Log("veo al enemigo");
-            _fsm.DoTransition("escape");
-            //_fsm.DoTransition("pursuit");
+            _fsm.DoTransition("pursuit");
         }
         if(!_lineOfSight.IsInSight(target))
         {
             Debug.Log("No veo al enemigo");
-            //_fsm.DoTransition("escape");
-            _fsm.DoTransition("pursuit");
+            _fsm.DoTransition("escape");
         }
         _fsm.OnUpdate();
     }

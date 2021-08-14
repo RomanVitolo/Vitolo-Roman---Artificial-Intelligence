@@ -10,7 +10,6 @@ public class PursuitState<T> : FSMState<T>
     public PursuitState(IAttack followTarget)
     {
         _followTarget = followTarget;
-        
     }
 
     public override void Execute()

@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour, IMove
         transform.forward = Vector3.Lerp(transform.forward, b: dir, t: 0.2f * Time.deltaTime);
         Debug.Log("activo el Go Move" + transform.forward.x);
     }
-    
+
     public void Escape()
     {
         Debug.Log("entre al Escape de Enemy");
