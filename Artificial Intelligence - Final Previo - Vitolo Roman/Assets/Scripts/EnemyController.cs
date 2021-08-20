@@ -4,38 +4,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IIdle, IAttack
-{
-    [SerializeField] private Transform target;
+{    
     public bool inSight = true;
     private LineOfSight _lineOfSight;
-    private Rigidbody rb;
-    [SerializeField] private Rigidbody rbTarget;
+    private Rigidbody rb;    
     private FSM<string> _fsm;
     private Enemy _enemy;
     private float timePrediction = 2f;
     private float speed = 2f;
+    [SerializeField] private Rigidbody rbTarget;
+    [SerializeField] private Transform target;
     [SerializeField] private float radius = 1f;
     [SerializeField] private float avoidWeight = 0.5f;
     [SerializeField] private LayerMask mask;
     private ISteeringBehaviors _steeringBehaviors;
+    INode _iNode;        
 
     private Enemy2 _enemy2;
     //private IMove _move;
     
-
     void Awake()
-    {
+    {                    
         rb = GetComponent<Rigidbody>();
         _lineOfSight = GetComponent<LineOfSight>();
+        _enemy = GetComponent<Enemy>();
+        //_enemy2 = GetComponent<Enemy2>();
     }
 
     private void Start()
-    {
-        _enemy = GetComponent<Enemy>();
+    {        
+        // Steering Behaviors
         _steeringBehaviors = new Pursuit(transform, target, rbTarget, timePrediction);
         _steeringBehaviors = new ObstacleAvoidance(transform, target, radius, mask, avoidWeight);
-        _enemy2 = GetComponent<Enemy2>();
+
+        // State Machine
         InitializeStateMachine();
+
+        //Tree
+        
     }
 
     void Update()
@@ -125,7 +131,6 @@ public class EnemyController : MonoBehaviour, IIdle, IAttack
 
     IEnumerator WaitToRecover()
     {
-        yield return new WaitForSeconds(1);
-        
+        yield return new WaitForSeconds(1);        
     }
 }

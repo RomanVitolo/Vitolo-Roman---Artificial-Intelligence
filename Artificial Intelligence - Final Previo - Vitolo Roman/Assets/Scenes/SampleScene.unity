@@ -451,16 +451,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1547687036, guid: 7bab181d85b74c44c945b7231ed7cd24, type: 3}
       propertyPath: radius
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1547687036, guid: 7bab181d85b74c44c945b7231ed7cd24, type: 3}
       propertyPath: avoidWeight
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1012833419710257460, guid: 7bab181d85b74c44c945b7231ed7cd24,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.05
+      value: 6.14
       objectReference: {fileID: 0}
     - target: {fileID: 1012833419710257460, guid: 7bab181d85b74c44c945b7231ed7cd24,
         type: 3}
@@ -516,6 +516,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HPCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904384410565996344, guid: 7bab181d85b74c44c945b7231ed7cd24,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bab181d85b74c44c945b7231ed7cd24, type: 3}
@@ -607,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 1473367779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.17, y: 1.18, z: 11.87}
-  m_LocalScale: {x: 0.1426094, y: 2.421821, z: 1.2158}
+  m_LocalScale: {x: 0.23583317, y: 2.421821, z: 1.2158}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
